@@ -1,6 +1,6 @@
 import React from "react";
 import type {Metadata} from "next";
-import {redirect} from "next/navigation";
+// import {redirect} from "next/navigation";
 import {getServerAuthSession} from "~/server/auth";
 import {SidebarNavigation} from "~/components/dashboard/layouts/sidebar-navigation";
 import {Toaster} from "~/components/ui/toast";
