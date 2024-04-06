@@ -15,7 +15,7 @@ const SignInProviders = ({providers}: SignInProvidersProps) => {
 
   return Object.values(providers).map((provider) => {
     if (provider.name === "Google") {
-      return <GoogleButton type="dark" onClick={() => signIn(provider.id)} />;
+      return <GoogleButton key={provider.name} type="dark" onClick={() => signIn(provider.id)} />;
     }
     return (
       <Button key={provider.name} variant="primary" onClick={() => signIn(provider.id)}>
