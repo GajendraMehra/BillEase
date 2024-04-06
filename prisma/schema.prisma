@@ -1,0 +1,133 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url = env("DATABASE_URL")
+    relationMode = "prisma"
+}
+
+// Necessary for Next auth
+model Account {
+    id                String  @id @default(cuid())
+    userId            String
+    type              String
+    provider          String
+    providerAccountId String
+    refresh_token     String? @db.Text
+    access_token      String? @db.Text
+    expires_at        Int?
+    token_type        String?
+    scope             String?
+    id_token          String? @db.Text
+    session_state     String?
+    user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@unique([provider, providerAccountId])
+    @@index([userId])
+}
+
+model Session {
+    id           String   @id @default(cuid())
+    sessionToken String   @unique
+    userId       String
+    expires      DateTime
+    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@index([userId])
+}
+
+model User {
+    id            String    @id @default(cuid())
+    name          String?
+    email         String?   @unique
+    emailVerified DateTime?
+    image         String?
+    accounts      Account[]
+    sessions      Session[]
+}
+
+model VerificationToken {
+    identifier String
+    token      String   @unique
+    expires    DateTime
+
+    @@unique([identifier, token])
+}
+
+model ContactMethod {
+    id          String            @id @default(cuid())
+    type        ContactMethodType
+    name        String
+    description String            @db.Text
+    createdAt   DateTime          @default(now())
+    updatedAt   DateTime          @updatedAt
+}
+
+enum ContactMethodType {
+    ADDRESS
+    EMAIL
+    PHONE
+}
+
+model Snippet {
+    id          String      @id @default(cuid())
+    type        SnippetType
+    name        String
+    value       String      @db.Text
+    createdAt   DateTime    @default(now())
+    updatedAt   DateTime    @updatedAt
+}
+
+enum SnippetType {
+    HEADER
+    ABOUT_ME
+    PROJECTS
+    EXPERIENCE
+    CONTACT
+}
+
+model ExperienceItem {
+    id               String                         @id @default(cuid())
+    position         String
+    company          String
+    startDate        DateTime
+    endDate          DateTime?
+    createdAt        DateTime                       @default(now())
+    updatedAt        DateTime                       @updatedAt
+    responsibilities ExperienceItemResponsibility[]
+}
+
+model ExperienceItemResponsibility {
+    id               String         @id @default(cuid())
+    name             String
+    experienceItemId String
+    createdAt        DateTime       @default(now())
+    updatedAt        DateTime       @updatedAt
+    experienceItem   ExperienceItem @relation(fields: [experienceItemId], references: [id], onDelete: Cascade)
+
+    @@index([experienceItemId])
+}
+
+model SocialMediaLink {
+    id        String   @id @default(cuid())
+    url       String
+    icon      String
+}
+
+model ProjectItem {
+    id               String   @id @default(cuid())
+    name             String
+    description      String   @db.Text
+    shortDescription String?  @db.Text
+    image            String
+    coverImage       String
+    createdAt        DateTime @default(now())
+    updatedAt        DateTime @updatedAt
+    websiteUrl       String?
+    repositoryUrl    String?
+}
