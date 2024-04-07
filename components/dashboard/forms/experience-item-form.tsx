@@ -4,7 +4,7 @@ import React, {useEffect} from "react";
 import {FormProvider, useFieldArray, useForm} from "react-hook-form";
 import {useRouter} from "next/navigation";
 import {format} from "date-fns";
-import {CalendarIcon, PlusIcon, Trash2Icon} from "lucide-react";
+import {CalendarIcon, PlusIcon} from "lucide-react";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {api} from "~/trpc/react";
 import {useToast} from "~/hooks/use-toast";
