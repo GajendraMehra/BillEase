@@ -73,7 +73,11 @@ const ContactItemForm = ({id}: ContactItemFormProps) => {
           render={({field: {name, value, onChange}}) => (
             <FormItem>
               <FormLabel>Type</FormLabel>
-              <Select name={name} value={value} onValueChange={(newVal) => (newVal ? onChange(newVal) : undefined)}>
+              <Select
+                disabled={!!id}
+                name={name}
+                value={value}
+                onValueChange={(newVal) => (newVal ? onChange(newVal) : undefined)}>
                 <FormControl withDescription>
                   <SelectTrigger className="w-[14rem]">
                     <SelectValue placeholder="Select type..." />
@@ -101,7 +105,7 @@ const ContactItemForm = ({id}: ContactItemFormProps) => {
             <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input {...field} placeholder={fieldPlaceholder?.name} />
+                <Input disabled={!!id} {...field} placeholder={fieldPlaceholder?.name} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -113,7 +117,7 @@ const ContactItemForm = ({id}: ContactItemFormProps) => {
           name="description"
           render={({field}) => (
             <FormItem>
-              <FormLabel>Description</FormLabel>
+              <FormLabel>Value</FormLabel>
               <FormControl>
                 <Input {...field} placeholder={fieldPlaceholder?.description} />
               </FormControl>
@@ -149,6 +153,18 @@ const fieldPlaceholdersDef: FieldPlaceholders = {
   PHONE: {
     name: "Phone number",
     description: "Availability, possible contact hours"
+  },
+  GST: {
+    name: "GST",
+    description: "GST No"
+  },
+  ACCOUNT_NO: {
+    name: "Account number",
+    description: "Account No"
+  },
+  IFSC: {
+    name: "IFSC Code",
+    description: "IFSC Code"
   }
 };
 

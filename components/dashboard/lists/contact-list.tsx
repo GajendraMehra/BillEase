@@ -3,7 +3,7 @@
 import React, {useState} from "react";
 import type {ContactMethod} from "@prisma/client";
 import Link from "next/link";
-import {PlusIcon, PencilIcon, TrashIcon} from "lucide-react";
+import {PencilIcon} from "lucide-react";
 import {api} from "~/trpc/react";
 import {useToast} from "~/hooks/use-toast";
 import {Dialog, DialogTrigger} from "~/components/ui/dialog";
@@ -55,7 +55,7 @@ const ContactList = () => {
   return (
     <Dialog onOpenChange={handleDialogOpenChange}>
       <Heading as="h2" size="sm">
-        Contact methods
+        Other Informations
       </Heading>
 
       <div className="flex flex-col items-start">
@@ -65,12 +65,12 @@ const ContactList = () => {
           <EmptySection heading="No contact methods found" />
         )}
 
-        <Button className="mt-6" asChild>
+        {/* <Button className="mt-6" asChild>
           <Link href="/dashboard/contact/new">
             <PlusIcon size={16} className="mr-1" />
             Add new item
           </Link>
-        </Button>
+        </Button> */}
       </div>
 
       <DeleteEntityDialog
@@ -102,10 +102,10 @@ const ContactMethodCard = ({id, name, description, onClickDeleteBtn}: ContactMet
       </Button>
 
       <DialogTrigger asChild>
-        <Button variant="ghost" size="icon" onClick={onClickDeleteBtn}>
+        {/* <Button variant="ghost" size="icon" onClick={onClickDeleteBtn}>
           <TrashIcon size={16} />
           <span className="sr-only">Delete</span>
-        </Button>
+        </Button> */}
       </DialogTrigger>
     </article>
   );

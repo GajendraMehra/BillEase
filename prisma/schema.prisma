@@ -72,6 +72,9 @@ enum ContactMethodType {
     ADDRESS
     EMAIL
     PHONE
+    GST
+    ACCOUNT_NO
+    IFSC
 }
 
 model Snippet {
