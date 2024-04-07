@@ -11,7 +11,10 @@ type ContactMethodIconsKeys = {
 const contactMethodIconsDef: ContactMethodIconsKeys = {
   ADDRESS: HouseSvg,
   EMAIL: EnvelopeSvg,
-  PHONE: PhoneSvg
+  PHONE: PhoneSvg,
+  ACCOUNT_NO: HouseSvg,
+  IFSC: HouseSvg,
+  GST: EnvelopeSvg
 };
 
 function getContactIcon(key: ContactMethodType) {
