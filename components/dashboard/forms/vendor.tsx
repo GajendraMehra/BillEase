@@ -7,7 +7,7 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {api} from "~/trpc/react";
 import {useToast} from "~/hooks/use-toast";
 import {Button} from "~/components/ui/button";
-import {FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "~/components/ui/form";
+import {FormControl, FormField, FormItem, FormLabel, FormMessage} from "~/components/ui/form";
 import {Input} from "~/components/ui/input";
 import {Textarea} from "~/components/ui/textarea";
 import type {ProjectItemFormValues} from "~/utils/validations/project";
