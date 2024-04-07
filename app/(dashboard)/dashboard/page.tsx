@@ -42,7 +42,7 @@ export default function Page() {
 
   return (
     <>
-      <PageHeader heading="General" description="Dashboard home page" />
+      <PageHeader heading="Bill Ease" description="Simplify Your Finances" />
       <PageContent>
         <Heading as="h2" size="sm">
           Introduction

@@ -17,7 +17,7 @@ export default async function Page() {
         {/* <p className="text-center text-sm">Sign In to the BillEase</p> */}
       </header>
 
-      <div className="flex w-full flex-col justify-center gap-4 pb-12 pt-8">
+      <div className="allign-center flex w-full flex-col justify-center gap-4 pb-12 pt-8">
         <SignInProviders providers={providers} />
 
         <div className="relative mx-10">

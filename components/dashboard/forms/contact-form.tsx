@@ -52,9 +52,9 @@ const ContactForm = () => {
           name="description"
           render={({field}) => (
             <FormItem>
-              <FormLabel>Description</FormLabel>
+              <FormLabel>Compant Name</FormLabel>
               <FormControl>
-                <Textarea {...field} placeholder="Enter section description here" />
+                <Textarea {...field} placeholder="Enter Company Name here" />
               </FormControl>
               <FormMessage />
             </FormItem>

@@ -2,7 +2,7 @@
 
 import React, {useState} from "react";
 import Link from "next/link";
-import {PlusIcon, PencilIcon, TrashIcon, EyeIcon} from "lucide-react";
+import {PlusIcon, PencilIcon, TrashIcon} from "lucide-react";
 import type {ProjectItem} from "~/server/api/routers/vendor";
 import {api} from "~/trpc/react";
 import {useToast} from "~/hooks/use-toast";
@@ -13,13 +13,13 @@ import {Dialog, DialogTrigger} from "~/components/ui/dialog";
 import {DeleteEntityDialog} from "~/components/dashboard/dialogs/delete-entity-dialog";
 
 const ProjectList = () => {
-  const {data: projects = [], isLoading} = api.vendor.getItems.useQuery();
+  const {data: vendors = [], isLoading} = api.vendor.getItems.useQuery();
   const deleteItemMutation = api.vendor.deleteItem.useMutation();
   const {toast} = useToast();
   const utils = api.useUtils();
 
   const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
-  const selectedItem = projects.find((item) => item.id === selectedItemId);
+  const selectedItem = vendors.find((item) => item.id === selectedItemId);
 
   async function handleDeleteItem() {
     if (!selectedItemId) return;
@@ -47,7 +47,7 @@ const ProjectList = () => {
   }
 
   function displayItems() {
-    return projects.map((item) => (
+    return vendors.map((item) => (
       <ProjectCard key={item.id} onClickDeleteBtn={() => setSelectedItemId(item.id)} {...item} />
     ));
   }
@@ -59,7 +59,7 @@ const ProjectList = () => {
       </Heading>
 
       <div className="flex flex-col items-start">
-        {isLoading ? null : projects.length ? displayItems() : <EmptySection heading="No Vendors found" />}
+        {isLoading ? null : vendors.length ? displayItems() : <EmptySection heading="No Vendors found" />}
 
         <Button className="mt-6" asChild>
           <Link href="/dashboard/vendor/new">
@@ -82,7 +82,7 @@ type ProjectCardProps = ProjectItem & {
   onClickDeleteBtn: (e: React.MouseEvent) => void;
 };
 
-const ProjectCard = ({id, name, description, coverImage, onClickDeleteBtn}: ProjectCardProps) => {
+const ProjectCard = ({id, name, description, onClickDeleteBtn}: ProjectCardProps) => {
   const MAX_TEXT_LENGTH = 100;
   const descriptionLength = description?.length || description?.length;
   const itemDescription = (description || description).slice(0, MAX_TEXT_LENGTH);

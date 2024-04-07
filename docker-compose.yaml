@@ -4,35 +4,5 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
-    environment:
-      DATABASE_URL: ${DATABASE_URL}
-      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET:-http://localhost:3000}
-      NEXTAUTH_URL: ${NEXTAUTH_URL:-http://localhost:3000}
     ports:
       - "8989:3001"
-    depends_on:
-      - bill-ease-db
-    # command: >
-    #   bash -c "if [ $NODE_ENV = 'development' ]; then npm run develop; else npm start; fi &&"
-    volumes:
-      - ./src:/src
-      - /src/node_modules
-    networks:
-      - bill-ease-network
-
-  bill-ease-db:
-    image: postgres:latest
-    container_name: bill-ease-db
-    ports:
-      - "5430:5432"
-    restart: always
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-    volumes:
-      - ./bill-ease-db:/var/lib/postgresql/data
-    networks:
-      - bill-ease-network
-networks:
-  bill-ease-network:
-    driver: bridge

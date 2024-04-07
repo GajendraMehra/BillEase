@@ -2,7 +2,6 @@
 
 import React from "react";
 import {FormProvider, useForm} from "react-hook-form";
-import {FileX2Icon} from "lucide-react";
 import {useRouter} from "next/navigation";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {api} from "~/trpc/react";
@@ -11,11 +10,8 @@ import {Button} from "~/components/ui/button";
 import {FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "~/components/ui/form";
 import {Input} from "~/components/ui/input";
 import {Textarea} from "~/components/ui/textarea";
-import {Dropzone} from "~/components/ui/dropzone";
-import {ImageCard} from "~/components/ui/image-card";
 import type {ProjectItemFormValues} from "~/utils/validations/project";
 import {projectItemSchema} from "~/utils/validations/project";
-import {acceptedImageTypes} from "~/utils/file";
 
 type ProjectItemFormProps = {
   id: string;

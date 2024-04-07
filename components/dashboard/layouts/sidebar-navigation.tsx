@@ -7,13 +7,13 @@ import {useParams, usePathname} from "next/navigation";
 import type {LucideIcon} from "lucide-react";
 import {
   LayoutDashboardIcon,
-  HeartIcon,
   // WallpaperIcon,
   // User2Icon,
   ImageIcon,
   BriefcaseIcon,
   MailIcon,
-  LogOutIcon
+  LogOutIcon,
+  User2Icon
 } from "lucide-react";
 import {Avatar, AvatarFallback, AvatarImage} from "~/components/ui/avatar";
 import {Sidebar, SidebarContent, SidebarTrigger} from "~/components/ui/sidebar";
@@ -32,8 +32,8 @@ const navigationItems: Array<NavigationItemDef> = [
   {
     id: "social-media",
     text: "Company Profile",
-    href: "/dashboard/construction",
-    icon: HeartIcon
+    href: "/dashboard/contact",
+    icon: User2Icon
   },
   // {
   //   id: "header",

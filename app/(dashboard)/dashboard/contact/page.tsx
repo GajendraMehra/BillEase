@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <>
-      <PageHeader heading="Contact" description="Contact section settings" />
+      <PageHeader heading="BillEase" description="Simplify Your Finances" />
       <PageContent>
         <ContactForm />
         <Separator className="my-8" />
