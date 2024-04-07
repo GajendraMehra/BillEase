@@ -26,24 +26,22 @@ const ProjectItemForm = ({id}: ProjectItemFormProps) => {
   const {toast} = useToast();
   const utils = api.useUtils();
 
-  const {data} = api.project.getItem.useQuery({id});
-  const createItemMutation = api.project.createItem.useMutation();
-  const updateItemMutation = api.project.updateItem.useMutation();
+  const {data} = api.vendor.getItem.useQuery({id});
+  const createItemMutation = api.vendor.createItem.useMutation();
+  const updateItemMutation = api.vendor.updateItem.useMutation();
 
   const formMethods = useForm<ProjectItemFormValues>({
     defaultValues: {
       name: "",
-      shortDescription: "",
+      address: "",
       description: "",
       websiteUrl: "",
-      repositoryUrl: "",
-      image: undefined,
-      coverImage: undefined
+      repositoryUrl: ""
     },
     values: data
       ? {
           ...data,
-          shortDescription: data.shortDescription ?? "",
+          address: data.address ?? "",
           websiteUrl: data.websiteUrl ?? "",
           repositoryUrl: data.repositoryUrl ?? ""
         }
@@ -67,40 +65,16 @@ const ProjectItemForm = ({id}: ProjectItemFormProps) => {
           variant: "success"
         });
 
-        await utils.project.getItem.invalidate();
+        await utils.vendor.getItem.invalidate();
       }
     });
 
-    router.push("/dashboard/projects");
+    router.push("/dashboard/vendor");
   }
 
   return (
     <FormProvider {...formMethods}>
       <form onSubmit={(e) => handleSubmit(handleFormSubmit)(e)} encType="multipart/form-data">
-        <FormField
-          control={control}
-          name="coverImage"
-          render={({field: {name, value, onChange}}) => (
-            <FormItem>
-              <FormLabel>Cover image</FormLabel>
-              {value ? (
-                <ImageCard
-                  file={value}
-                  actions={
-                    <Button variant="secondary" onClick={() => onChange(undefined)}>
-                      <FileX2Icon size={16} className="mr-2" />
-                      Delete image
-                    </Button>
-                  }
-                />
-              ) : (
-                <Dropzone name={name} onDrop={onChange} accept={acceptedImageTypes} />
-              )}
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
         <FormField
           control={control}
           name="name"
@@ -117,39 +91,15 @@ const ProjectItemForm = ({id}: ProjectItemFormProps) => {
 
         <FormField
           control={control}
-          name="shortDescription"
+          name="address"
           render={({field}) => (
             <FormItem>
-              <FormLabel isOptional>Short description</FormLabel>
+              <FormLabel>Address</FormLabel>
               <FormControl>
                 <Textarea {...field} value={field.value ?? ""} placeholder="Enter item description here" />
               </FormControl>
               <FormMessage />
-              <FormDescription>If not provided, a description will be used instead.</FormDescription>
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={control}
-          name="image"
-          render={({field: {name, value, onChange}}) => (
-            <FormItem>
-              <FormLabel>Image</FormLabel>
-              {value ? (
-                <ImageCard
-                  file={value}
-                  actions={
-                    <Button variant="secondary" onClick={() => onChange(undefined)}>
-                      <FileX2Icon size={16} className="mr-2" />
-                      Delete image
-                    </Button>
-                  }
-                />
-              ) : (
-                <Dropzone name={name} onDrop={onChange} accept={acceptedImageTypes} />
-              )}
-              <FormMessage />
+              {/* <FormDescription>If not provided, a description will be used instead.</FormDescription> */}
             </FormItem>
           )}
         />
@@ -162,34 +112,6 @@ const ProjectItemForm = ({id}: ProjectItemFormProps) => {
               <FormLabel>Description</FormLabel>
               <FormControl>
                 <Textarea {...field} placeholder="Enter item description here" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={control}
-          name="websiteUrl"
-          render={({field}) => (
-            <FormItem>
-              <FormLabel isOptional>Website URL</FormLabel>
-              <FormControl>
-                <Input {...field} placeholder="Enter url to the website" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={control}
-          name="repositoryUrl"
-          render={({field}) => (
-            <FormItem>
-              <FormLabel isOptional>Repository URL</FormLabel>
-              <FormControl>
-                <Input {...field} placeholder="Enter url to the repository" />
               </FormControl>
               <FormMessage />
             </FormItem>

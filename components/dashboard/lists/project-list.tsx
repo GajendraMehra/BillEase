@@ -2,9 +2,8 @@
 
 import React, {useState} from "react";
 import Link from "next/link";
-import Image from "next/image";
 import {PlusIcon, PencilIcon, TrashIcon, EyeIcon} from "lucide-react";
-import type {ProjectItem} from "~/server/api/routers/project";
+import type {ProjectItem} from "~/server/api/routers/vendor";
 import {api} from "~/trpc/react";
 import {useToast} from "~/hooks/use-toast";
 import {Button} from "~/components/ui/button";
@@ -14,8 +13,8 @@ import {Dialog, DialogTrigger} from "~/components/ui/dialog";
 import {DeleteEntityDialog} from "~/components/dashboard/dialogs/delete-entity-dialog";
 
 const ProjectList = () => {
-  const {data: projects = [], isLoading} = api.project.getItems.useQuery();
-  const deleteItemMutation = api.project.deleteItem.useMutation();
+  const {data: projects = [], isLoading} = api.vendor.getItems.useQuery();
+  const deleteItemMutation = api.vendor.deleteItem.useMutation();
   const {toast} = useToast();
   const utils = api.useUtils();
 
@@ -31,11 +30,11 @@ const ProjectList = () => {
         async onSuccess() {
           toast({
             title: "Success",
-            description: "Project item deleted successfully",
+            description: "Vendor deleted successfully",
             variant: "success"
           });
 
-          await utils.project.getItems.invalidate();
+          await utils.vendor.getItems.invalidate();
         }
       }
     );
@@ -56,23 +55,23 @@ const ProjectList = () => {
   return (
     <Dialog onOpenChange={handleDialogOpenChange}>
       <Heading as="h2" size="sm">
-        Project items
+        Vendors
       </Heading>
 
       <div className="flex flex-col items-start">
-        {isLoading ? null : projects.length ? displayItems() : <EmptySection heading="No project items found" />}
+        {isLoading ? null : projects.length ? displayItems() : <EmptySection heading="No Vendors found" />}
 
         <Button className="mt-6" asChild>
-          <Link href="/dashboard/projects/new">
+          <Link href="/dashboard/vendor/new">
             <PlusIcon size={16} className="mr-1" />
-            Add new item
+            Add New Vendor
           </Link>
         </Button>
       </div>
 
       <DeleteEntityDialog
-        title="Delete project"
-        entityName={(selectedItem?.name || "Project").toLowerCase()}
+        title="Delete Vendor"
+        entityName={(selectedItem?.name || "Vendor").toLowerCase()}
         onClickDeleteBtn={() => handleDeleteItem()}
       />
     </Dialog>
@@ -83,17 +82,13 @@ type ProjectCardProps = ProjectItem & {
   onClickDeleteBtn: (e: React.MouseEvent) => void;
 };
 
-const ProjectCard = ({id, name, shortDescription, description, coverImage, onClickDeleteBtn}: ProjectCardProps) => {
+const ProjectCard = ({id, name, description, coverImage, onClickDeleteBtn}: ProjectCardProps) => {
   const MAX_TEXT_LENGTH = 100;
-  const descriptionLength = shortDescription?.length || description?.length;
-  const itemDescription = (shortDescription || description).slice(0, MAX_TEXT_LENGTH);
+  const descriptionLength = description?.length || description?.length;
+  const itemDescription = (description || description).slice(0, MAX_TEXT_LENGTH);
 
   return (
     <article className="flex w-full items-center gap-1 border-b-[1px] border-solid border-muted py-3 last-of-type:border-0">
-      <div className="relative mr-2 h-16 w-24 shrink-0 overflow-hidden rounded-md bg-accent">
-        {coverImage.url ? <Image src={coverImage.url} fill style={{objectFit: "cover"}} alt="" /> : null}
-      </div>
-
       <div className="flex flex-1 flex-col items-start">
         <p className="mr-2 font-poppins text-sm font-semibold leading-6">{name}</p>
         <p className="hidden text-xs leading-6 text-muted-foreground sm:block">
@@ -103,18 +98,18 @@ const ProjectCard = ({id, name, shortDescription, description, coverImage, onCli
       </div>
 
       <Button variant="ghost" size="icon" asChild>
-        <Link href={`/dashboard/projects/${id}`}>
+        <Link href={`/dashboard/vendor/${id}`}>
           <PencilIcon size={16} />
           <span className="sr-only">Edit</span>
         </Link>
       </Button>
 
-      <Button variant="ghost" size="icon" asChild>
-        <Link href={`/projects/${id}`} target="_blank">
+      {/* <Button variant="ghost" size="icon" asChild>
+        <Link href={`/dashboard/vendor/${id}`} target="_blank">
           <EyeIcon size={16} />
           <span className="sr-only">Show preview</span>
         </Link>
-      </Button>
+      </Button> */}
 
       <DialogTrigger asChild>
         <Button variant="ghost" size="icon" onClick={onClickDeleteBtn}>

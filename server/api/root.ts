@@ -3,7 +3,7 @@ import {contactRouter} from "./routers/contact";
 import {snippetRouter} from "./routers/snippet";
 import {experienceRouter} from "./routers/experience";
 import {socialMediaRouter} from "./routers/socialMedia";
-import {projectRouter} from "./routers/project";
+import {vendorRouter} from "./routers/vendor";
 import {imageRouter} from "./routers/image";
 
 /**
@@ -15,7 +15,7 @@ export const appRouter = createTRPCRouter({
   snippet: snippetRouter,
   experience: experienceRouter,
   socialMedia: socialMediaRouter,
-  project: projectRouter,
+  vendor: vendorRouter,
   image: imageRouter
 });
 

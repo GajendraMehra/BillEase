@@ -50,7 +50,7 @@ const navigationItems: Array<NavigationItemDef> = [
   {
     id: "projects",
     text: "Vendors",
-    href: "/dashboard/construction",
+    href: "/dashboard/vendor",
     icon: ImageIcon
   },
   {

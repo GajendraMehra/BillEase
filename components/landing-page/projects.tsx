@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import type {ProjectItem} from "~/server/api/routers/project";
+import type {ProjectItem} from "~/server/api/routers/vendor";
 import {api} from "~/trpc/server";
 import {PageSection} from "./page-section";
 
