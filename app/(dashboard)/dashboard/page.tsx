@@ -12,7 +12,7 @@ const projectLinks: Array<UsefulLinkDef> = [
     id: "github-repo",
     text: "Vendors",
     description: "Manage Your Vendors",
-    href: "/dashboard/invoice",
+    href: "/dashboard/vendor",
     icon: SquareUserRound
   },
   {
@@ -26,7 +26,7 @@ const projectLinks: Array<UsefulLinkDef> = [
     id: "releases",
     text: "Company Info",
     description: "View your company info",
-    href: "/dashboard/company",
+    href: "/dashboard/contact",
     icon: Building2
   }
 ];
