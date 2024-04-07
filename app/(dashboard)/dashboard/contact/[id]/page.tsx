@@ -21,7 +21,7 @@ export default function Page({params: {id}}: PageProps) {
 
   return (
     <>
-      <PageHeader heading={heading} description={description} />
+      <PageHeader heading={"BillEase"} description={description} />
       <PageContent>
         <ContactItemForm id={id} />
       </PageContent>

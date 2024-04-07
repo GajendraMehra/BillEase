@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <>
-      <PageHeader heading="Vendors" description="All Vendors" />
+      <PageHeader heading="BillEase" description="All Vendors" />
       <PageContent>
         <ProjectList />
       </PageContent>
