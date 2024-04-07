@@ -2,9 +2,8 @@ import React from "react";
 import type {Metadata} from "next";
 import {redirect} from "next/navigation";
 import {getServerAuthSession} from "~/server/auth";
-import pkg from "~/package.json";
-
 import "~/styles/globals.css";
+import {Toaster} from "~/components/ui/toast";
 
 export const metadata: Metadata = {
   title: "Dashboard: Authentication",
@@ -19,13 +18,13 @@ export default async function SignInLayout({children}: {children: React.ReactNod
   }
 
   return (
-    <main className="flex min-h-full">
-      <div className="mx-auto flex w-full max-w-80 flex-col items-center justify-center px-4">
+    <main className="flex flex min-h-full flex-grow flex-col place-content-center">
+      <div className="max-w-screen- mx-auto w-10/12   p-4 md:p-6 2xl:p-10">
         {children}
-
-        <footer className="flex flex-col items-center">
+        <Toaster />
+        {/* <footer className="mt-3 flex flex-col items-center">
           <span className="text-xs text-muted-foreground opacity-50">Dashboard v{pkg.version}</span>
-        </footer>
+        </footer> */}
       </div>
     </main>
   );
