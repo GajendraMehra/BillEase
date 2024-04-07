@@ -15,6 +15,8 @@ import {Popover, PopoverContent, PopoverTrigger} from "~/components/ui/popover";
 import {Calendar} from "~/components/ui/calendar";
 import type {ExperienceItemFormValues} from "~/utils/validations/experience";
 import {experienceItemSchema} from "~/utils/validations/experience";
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "~/components/ui/select";
+import {capitalize} from "~/utils/capitalize";
 
 type ExperienceItemFormProps = {
   id: string;
@@ -57,6 +59,7 @@ const ExperienceItemForm = ({id}: ExperienceItemFormProps) => {
       replace(responsibilities);
     }
   }, [responsibilities, replace]);
+  const {data: vendors = []} = api.vendor.getItems.useQuery();
 
   async function handleFormSubmit(
     {responsibilities: formResponsibilities, ...formValues}: ExperienceItemFormValues,
@@ -84,7 +87,7 @@ const ExperienceItemForm = ({id}: ExperienceItemFormProps) => {
       }
     });
 
-    router.push("/dashboard/experience");
+    router.push("/dashboard/invoice");
   }
 
   return (
@@ -95,43 +98,53 @@ const ExperienceItemForm = ({id}: ExperienceItemFormProps) => {
           name="position"
           render={({field}) => (
             <FormItem>
-              <FormLabel>Position name</FormLabel>
+              <FormLabel>Bill To</FormLabel>
               <FormControl>
-                <Input {...field} placeholder="Position name you worked at" />
+                <Input {...field} placeholder="Eg. Project Director" />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
+        <div className="flex sm:gap-4">
+          <FormField
+            control={control}
+            name="company"
+            render={({field: {name, value, onChange}}) => (
+              <FormItem>
+                <FormLabel>Company Name</FormLabel>
+                <Select name={name} value={value} onValueChange={(newVal) => (newVal ? onChange(newVal) : undefined)}>
+                  <FormControl withDescription>
+                    <SelectTrigger className="w-[14rem]">
+                      <SelectValue placeholder="Select Company..." />
+                    </SelectTrigger>
+                  </FormControl>
 
-        <FormField
-          control={control}
-          name="company"
-          render={({field}) => (
-            <FormItem>
-              <FormLabel>Company name</FormLabel>
-              <FormControl>
-                <Input {...field} placeholder="Company name you worked for" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <div className="sm:flex sm:gap-4">
+                  <SelectContent>
+                    {vendors.map((vendor) => (
+                      <SelectItem key={vendor.id} value={vendor.name}>
+                        {capitalize(vendor.name)}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <FormField
             control={control}
             name="startDate"
             render={({field: {value, onChange}}) => (
               <FormItem className="max-w-[14rem] flex-1">
-                <FormLabel>From</FormLabel>
+                <FormLabel>Bill Date</FormLabel>
 
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button variant="outline" className="w-full font-normal">
                         <CalendarIcon className="mr-2 h-4 w-4" />
-                        <span className="flex-1">{value ? format(value, "LLL dd, y") : "Pick start date"}</span>
+                        <span className="flex-1">{value ? format(value, "LLL dd, y") : "Pick Date"}</span>
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
@@ -151,8 +164,33 @@ const ExperienceItemForm = ({id}: ExperienceItemFormProps) => {
               </FormItem>
             )}
           />
+          {/* <FormField
+          control={control}
+          name="company"
+          render={({field: {name, value, onChange}}) => (
+            <FormItem className="max-w-[14rem] flex-1">
+              <FormLabel>Company name</FormLabel>
+              <Select name={name} value={value} onValueChange={(newVal) => (newVal ? onChange(newVal) : undefined)}>
+                <FormControl withDescription>
+                  <SelectTrigger className="w-[14rem]">
+                    <SelectValue placeholder="Select type..." />
+                  </SelectTrigger>
+                </FormControl>
 
-          <FormField
+                <SelectContent className="mr-2 h-4 w-4">
+                  {[{id: "nie"}].map((vendor) => (
+                    <SelectItem key={vendor.id} value={vendor.id}>
+                      {capitalize(vendor.id)}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        /> */}
+
+          {/* <FormField
             control={control}
             name="endDate"
             render={({field: {value, onChange}}) => (
@@ -184,42 +222,85 @@ const ExperienceItemForm = ({id}: ExperienceItemFormProps) => {
                 </Popover>
               </FormItem>
             )}
-          />
+          /> */}
         </div>
 
         <FormItem>
-          <FormLabel isOptional>Responsibilities</FormLabel>
-          <FormDescription className="pb-3 pt-0">
-            Add the responsibilities you had while working at this position.
-          </FormDescription>
+          <FormLabel isOptional>Supplies Details</FormLabel>
+          <FormDescription className="pb-3 pt-0">Add the supplies which you have delivered</FormDescription>
 
           {fields.map(({id}, idx) => (
-            <FormField
-              key={id}
-              control={control}
-              name={`responsibilities.${idx}.name`}
-              render={({field}) => (
-                <FormItem className="py-2">
-                  <div className="flex items-center">
-                    <FormLabel className="sr-only">Responsibility</FormLabel>
-                    <FormControl className="mr-2">
-                      <Input {...field} placeholder="Enter the specific task or responsibility here" />
-                    </FormControl>
-
-                    <Button variant="ghost" size="icon" onClick={() => remove(idx)}>
-                      <Trash2Icon size={16} />
-                      <span className="sr-only">Delete</span>
-                    </Button>
-                  </div>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <div key={id} className="flex">
+              <FormField
+                control={control}
+                name={`responsibilities.${idx}.name`}
+                render={({field}) => (
+                  <FormItem className="py-2">
+                    <div className="flex items-center">
+                      <FormLabel className="sr-only">Description</FormLabel>
+                      <FormControl className="mr-2">
+                        <Input {...field} placeholder="Description" />
+                      </FormControl>
+                    </div>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              {/* <FormField
+                control={control}
+                name={`responsibilities.${idx}.hsncode`}
+                render={({field}) => (
+                  <FormItem className="py-2">
+                    <div className="flex items-center">
+                      <FormLabel className="sr-only">HSN Code</FormLabel>
+                      <FormControl className="mr-2">
+                        <Input {...field} placeholder="HSN Code" />
+                      </FormControl>
+                    </div>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={control}
+                name={`responsibilities.${idx}.unitprice`}
+                render={({field}) => (
+                  <FormItem className="py-2">
+                    <div className="flex items-center">
+                      <FormLabel className="sr-only">Unit Price</FormLabel>
+                      <FormControl className="mr-2">
+                        <Input {...field} placeholder="Enter unit price here" />
+                      </FormControl>
+                    </div>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={control}
+                name={`responsibilities.${idx}.qty`}
+                render={({field}) => (
+                  <FormItem className="py-2">
+                    <div className="flex items-center">
+                      <FormLabel className="sr-only">Qty</FormLabel>
+                      <FormControl className="mr-2">
+                        <Input {...field} placeholder="Enter qty  here" />
+                      </FormControl>
+                      <Button variant="ghost" size="icon" onClick={() => remove(idx)}>
+                        <Trash2Icon size={16} />
+                        <span className="sr-only">Delete</span>
+                      </Button>
+                    </div>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              /> */}
+            </div>
           ))}
 
           <Button variant="secondary" className="mt-2" onClick={() => append(newResponsibilityItem)}>
             <PlusIcon size={16} className="mr-1" />
-            Add responsibility
+            Add
           </Button>
         </FormItem>
 

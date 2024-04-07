@@ -55,14 +55,14 @@ const navigationItems: Array<NavigationItemDef> = [
   },
   {
     id: "experience",
-    text: "Generate Bill",
-    href: "/dashboard/construction",
+    text: "New Invoice",
+    href: "/dashboard/invoice/new",
     icon: BriefcaseIcon
   },
   {
     id: "contact",
     text: "All Invoices",
-    href: "/dashboard/construction",
+    href: "/dashboard/invoice",
     icon: MailIcon
   }
 ];

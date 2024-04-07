@@ -5,6 +5,7 @@ import {PageContent} from "~/components/dashboard/layouts/page-content";
 import {ContactForm} from "~/components/dashboard/forms/contact-form";
 import {ContactList} from "~/components/dashboard/lists/contact-list";
 import {Separator} from "~/components/ui/separator";
+import pkg from "~/package.json";
 
 export const metadata: Metadata = {
   title: "Dashboard: Contact"
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <>
-      <PageHeader heading="BillEase" description="Simplify Your Finances" />
+      <PageHeader heading={pkg.displayName} description={pkg.tag} />
       <PageContent>
         <ContactForm />
         <Separator className="my-8" />

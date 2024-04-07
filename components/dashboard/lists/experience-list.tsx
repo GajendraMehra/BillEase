@@ -60,16 +60,16 @@ const ExperienceList = () => {
   return (
     <Dialog onOpenChange={handleDialogOpenChange}>
       <Heading as="h2" size="sm">
-        Experience items
+        Invoices
       </Heading>
 
       <div className="flex flex-col items-start">
-        {isLoading ? null : experience.length ? displayItems() : <EmptySection heading="No experience items found" />}
+        {isLoading ? null : experience.length ? displayItems() : <EmptySection heading="No Invoice found" />}
 
         <Button className="mt-6" asChild>
-          <Link href="/dashboard/experience/new">
+          <Link href="/dashboard/invoice/new">
             <PlusIcon size={16} className="mr-1" />
-            Add new item
+            Add new Invoice
           </Link>
         </Button>
       </div>
@@ -91,16 +91,16 @@ const ExperienceCard = ({id, company, startDate, endDate, position, onClickDelet
   return (
     <article className="flex w-full items-center gap-1 border-b-[1px] border-solid border-muted py-3 last-of-type:border-0">
       <div className="mr-4 flex-1">
-        <p className="font-poppins text-sm font-semibold leading-8">{position}</p>
-        <p className="text-xs leading-6 text-muted-foreground">{company}</p>
+        <p className="font-poppins text-sm font-semibold leading-8">{company}</p>
+        <p className="text-xs leading-6 text-muted-foreground">{position}</p>
         <span className="text-xs leading-6 text-muted-foreground">
-          {format(startDate, "MMM yyyy")} {" - "}
-          {endDate ? format(endDate, "MMM yyyy") : "Present"}
+          {format(startDate, "dd MMM yyyy")}
+          {/* {endDate ? format(endDate, "MMM yyyy") : "Present"} */}
         </span>
       </div>
 
       <Button variant="ghost" size="icon" asChild>
-        <Link href={`/dashboard/experience/${id}`}>
+        <Link href={`/dashboard/invoice/${id}`}>
           <PencilIcon size={16} />
           <span className="sr-only">Edit</span>
         </Link>

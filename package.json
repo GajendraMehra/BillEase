@@ -1,5 +1,7 @@
 {
-  "name": "bill-ease-portfolio-website",
+  "name": "bill_ease",
+  "displayName": "BillEase",
+  "tag": "Simplify Your Finances",
   "version": "0.1.0",
   "private": true,
   "type": "module",
