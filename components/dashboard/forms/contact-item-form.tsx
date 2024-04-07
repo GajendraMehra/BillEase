@@ -74,7 +74,7 @@ const ContactItemForm = ({id}: ContactItemFormProps) => {
             <FormItem>
               <FormLabel>Type</FormLabel>
               <Select
-                disabled={!!id}
+                disabled={id != "new"}
                 name={name}
                 value={value}
                 onValueChange={(newVal) => (newVal ? onChange(newVal) : undefined)}>
@@ -105,7 +105,7 @@ const ContactItemForm = ({id}: ContactItemFormProps) => {
             <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input disabled={!!id} {...field} placeholder={fieldPlaceholder?.name} />
+                <Input disabled={id != "new"} {...field} placeholder={fieldPlaceholder?.name} />
               </FormControl>
               <FormMessage />
             </FormItem>

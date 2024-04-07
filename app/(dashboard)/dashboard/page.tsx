@@ -1,33 +1,33 @@
 import React from "react";
 import type {Metadata} from "next";
 import type {LucideIcon} from "lucide-react";
-import {CodeIcon, BookTextIcon, RocketIcon} from "lucide-react";
+import {SquareUserRound, BookTextIcon, Building2} from "lucide-react";
 import {PageHeader} from "~/components/dashboard/layouts/page-header";
 import {PageContent} from "~/components/dashboard/layouts/page-content";
 import {Button} from "~/components/ui/button";
 import {Heading} from "~/components/ui/heading";
-
+import Link from "next/link";
 const projectLinks: Array<UsefulLinkDef> = [
   {
     id: "github-repo",
-    text: "Repository",
-    description: "View the source code on GitHub",
-    href: "https://github.com/michu2k/bill-ease-portfolio-website",
-    icon: CodeIcon
+    text: "Vendors",
+    description: "Manage Your Vendors",
+    href: "/dashboard/invoice",
+    icon: SquareUserRound
   },
   {
     id: "documentation",
-    text: "Documentation",
-    description: "Learn how to configure the project",
-    href: "https://github.com/michu2k/bill-ease-portfolio-website/blob/master/README.md",
+    text: "Invoices",
+    description: "View your Invoices",
+    href: "/dashboard/invoice",
     icon: BookTextIcon
   },
   {
     id: "releases",
-    text: "Releases",
-    description: "View the latest releases",
-    href: "https://github.com/michu2k/bill-ease-portfolio-website/releases",
-    icon: RocketIcon
+    text: "Company Info",
+    description: "View your company info",
+    href: "/dashboard/company",
+    icon: Building2
   }
 ];
 
@@ -54,15 +54,13 @@ export default function Page() {
           Whether you are an individual or a business, BillEase has got you covered.
         </p>
 
-        {/* <Heading as="h2" size="sm">
+        <Heading as="h2" size="sm">
           Quick Access
         </Heading>
 
-        <p className="pb-4 text-sm leading-7 text-muted-foreground">
-          If you want to learn more about the project, check out the links below.
-        </p> */}
+        <p className="pb-4 text-sm leading-7 text-muted-foreground">Below are some quick features</p>
 
-        {/* <ul className="grid gap-3 pt-2 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">{displayLinks()}</ul> */}
+        {<ul className="grid gap-3 pt-2 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">{displayLinks()}</ul>}
       </PageContent>
     </>
   );
@@ -80,13 +78,13 @@ const LinkCard = ({text, description, icon: Icon, href}: UsefulLinkDef) => {
   return (
     <li className="group flex">
       <Button variant="outline" className="h-20 flex-1 justify-start gap-4" asChild>
-        <a href={href} target="_blank" rel="noopener noreferrer">
+        <Link href={href} rel="noopener noreferrer">
           <Icon size={24} className="text-foreground transition-colors group-hover:text-primary" />
           <span className="flex flex-col gap-1">
             <span className="text-sm text-foreground">{text}</span>
             <span className="font-sans text-xs font-normal text-muted-foreground">{description}</span>
           </span>
-        </a>
+        </Link>
       </Button>
     </li>
   );
