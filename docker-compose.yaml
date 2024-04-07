@@ -6,3 +6,12 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8989:3001"
+
+  mysql:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: your_mysql_root_password
+      MYSQL_DATABASE: your_mysql_database_name
+      MYSQL_USER: your_mysql_username
+      MYSQL_PASSWORD: your_mysql_password
