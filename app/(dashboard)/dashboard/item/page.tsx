@@ -1,19 +1,22 @@
 import React from "react";
 import type {Metadata} from "next";
-import {AboutForm} from "~/components/dashboard/forms/about-form";
 import {PageHeader} from "~/components/dashboard/layouts/page-header";
 import {PageContent} from "~/components/dashboard/layouts/page-content";
+import pkg from "~/package.json";
+import {ItemList} from "~/components/dashboard/lists/item-list";
 
 export const metadata: Metadata = {
-  title: "Dashboard: About Me"
+  title: "Dashboard: Header qq"
 };
 
 export default function Page() {
   return (
     <>
-      <PageHeader heading="About" description="About section settings" />
+      <PageHeader heading={pkg.displayName} description={pkg.tag} />
       <PageContent>
-        <AboutForm />
+        <>
+          <ItemList />
+        </>
       </PageContent>
     </>
   );

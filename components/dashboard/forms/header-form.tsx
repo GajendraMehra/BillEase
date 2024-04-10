@@ -12,67 +12,109 @@ import {Textarea} from "~/components/ui/textarea";
 import {Heading} from "~/components/ui/heading";
 import type {HeaderSnippetsFormValues} from "~/utils/validations/header";
 import {headerSnippetsSchema} from "~/utils/validations/header";
-import {getSnippetValues, useSnippets} from "~/hooks/use-snippets";
+import {useRouter} from "next/navigation";
+type HeaderFormProps = {
+  id: string;
+};
 
-const HeaderForm = () => {
+const HeaderForm = ({id}: HeaderFormProps) => {
   const {toast} = useToast();
-  const {data = []} = api.snippet.getSnippets.useQuery({type: "HEADER", keys: ["heading", "description", "image"]});
-  const updateSnippets = useSnippets<keyof HeaderSnippetsFormValues>("HEADER", data);
-  const {heading = "", description = ""} = getSnippetValues<keyof HeaderSnippetsFormValues>(data);
+  const {data} = api.snippet.getItem.useQuery({id});
+  const createItemMutation = api.snippet.createSnippet.useMutation();
+  const updateItemMutation = api.snippet.updateSnippet.useMutation();
+  const utils = api.useUtils();
+  const router = useRouter();
 
   const formMethods = useForm<HeaderSnippetsFormValues>({
     defaultValues: {
-      heading: "",
       description: ""
     },
     values: {
-      heading,
-      description
+      description: data?.description || "",
+      gst: data?.gst.toString() || "",
+      hsnCode: data?.hsnCode || "",
+      name: data?.name || ""
     },
     resolver: zodResolver(headerSnippetsSchema)
   });
 
   const {control, handleSubmit} = formMethods;
 
-  async function handleFormSubmit({heading, description}: HeaderSnippetsFormValues, e?: React.BaseSyntheticEvent) {
+  async function handleFormSubmit({...formValues}: HeaderSnippetsFormValues, e?: React.BaseSyntheticEvent) {
+    console.log({formValues});
+
     e?.preventDefault();
+    const mutation = data?.id ? updateItemMutation : createItemMutation;
+    const mutationVariables = data?.id ? {id: data.id, ...formValues} : {...formValues};
 
-    await updateSnippets({heading, description});
+    await mutation.mutateAsync(
+      {...mutationVariables, gst: mutationVariables.gst / 1 || 0},
+      {
+        async onSuccess() {
+          toast({
+            title: "Success",
+            description: data?.id ? "Your changes have been saved." : "A new item has been added.",
+            variant: "success"
+          });
 
-    toast({
-      title: "Success",
-      description: "Your changes have been saved.",
-      variant: "success"
-    });
+          await utils.snippet.getSnippets.invalidate();
+        }
+      }
+    );
+    router.push("/dashboard/item");
   }
 
   return (
     <FormProvider {...formMethods}>
       <form onSubmit={(e) => handleSubmit(handleFormSubmit)(e)} encType="multipart/form-data">
         <Heading as="h2" size="sm">
-          General settings
+          New Item
         </Heading>
-
         <FormField
           control={control}
-          name="heading"
+          name="name"
           render={({field}) => (
             <FormItem>
-              <FormLabel>Heading</FormLabel>
+              <FormLabel>Item Name</FormLabel>
               <FormControl>
-                <Input {...field} placeholder="Main page heading" />
+                <Input {...field} placeholder="Web Cameras" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />{" "}
+        <FormField
+          control={control}
+          name="hsnCode"
+          render={({field}) => (
+            <FormItem>
+              <FormLabel>HSN Code</FormLabel>
+              <FormControl>
+                <Input {...field} placeholder="13023210" />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-
+        <FormField
+          control={control}
+          name="gst"
+          render={({field}) => (
+            <FormItem>
+              <FormLabel>GST</FormLabel>
+              <FormControl>
+                <Input type="number" {...field} placeholder="18" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <FormField
           control={control}
           name="description"
           render={({field}) => (
             <FormItem>
-              <FormLabel isOptional>Description</FormLabel>
+              <FormLabel>Description</FormLabel>
               <FormControl>
                 <Textarea {...field} placeholder="Enter short header description here" />
               </FormControl>
@@ -80,7 +122,6 @@ const HeaderForm = () => {
             </FormItem>
           )}
         />
-
         <Button type="submit" className="mt-6">
           Save changes
         </Button>

@@ -1,4 +1,4 @@
-import type {Snippet, SnippetType} from "@prisma/client";
+import type {Snippet} from "@prisma/client";
 import {api} from "~/trpc/react";
 
 type SnippetValues<T extends string> = {
@@ -14,7 +14,7 @@ function getSnippetValues<T extends string>(data: Array<Snippet>): Partial<Snipp
   return {};
 }
 
-const useSnippets = <T extends string>(type: SnippetType, data: Array<Snippet>) => {
+const useSnippets = <T extends string>(type: string, data: Array<Snippet>) => {
   const updateSnippet = api.snippet.updateSnippet.useMutation();
   const createSnippet = api.snippet.createSnippet.useMutation();
   const utils = api.useUtils();

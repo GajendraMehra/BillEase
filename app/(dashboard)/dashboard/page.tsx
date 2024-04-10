@@ -7,6 +7,8 @@ import {PageContent} from "~/components/dashboard/layouts/page-content";
 import {Button} from "~/components/ui/button";
 import {Heading} from "~/components/ui/heading";
 import Link from "next/link";
+import pkg from "~/package.json";
+
 const projectLinks: Array<UsefulLinkDef> = [
   {
     id: "github-repo",
@@ -42,7 +44,7 @@ export default function Page() {
 
   return (
     <>
-      <PageHeader heading="Bill Ease" description="Simplify Your Finances" />
+      <PageHeader heading={pkg.displayName} description={pkg.tag} />
       <PageContent>
         <Heading as="h2" size="sm">
           Introduction

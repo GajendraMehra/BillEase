@@ -13,7 +13,8 @@ import {
   BriefcaseIcon,
   MailIcon,
   LogOutIcon,
-  User2Icon
+  User2Icon,
+  ShoppingBasket
 } from "lucide-react";
 import {Avatar, AvatarFallback, AvatarImage} from "~/components/ui/avatar";
 import {Sidebar, SidebarContent, SidebarTrigger} from "~/components/ui/sidebar";
@@ -29,11 +30,12 @@ const navigationItems: Array<NavigationItemDef> = [
     href: "/dashboard",
     icon: LayoutDashboardIcon
   },
+
   {
     id: "social-media",
-    text: "Company Profile",
-    href: "/dashboard/contact",
-    icon: User2Icon
+    text: "Items",
+    href: "/dashboard/item",
+    icon: ShoppingBasket
   },
   // {
   //   id: "header",
@@ -64,6 +66,12 @@ const navigationItems: Array<NavigationItemDef> = [
     text: "All Invoices",
     href: "/dashboard/invoice",
     icon: MailIcon
+  },
+  {
+    id: "social-media",
+    text: "Company Profile",
+    href: "/dashboard/contact",
+    icon: User2Icon
   }
 ];
 
