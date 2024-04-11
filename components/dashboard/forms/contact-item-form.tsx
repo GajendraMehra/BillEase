@@ -142,6 +142,10 @@ type FieldPlaceholders = {
 };
 
 const fieldPlaceholdersDef: FieldPlaceholders = {
+  NAME: {
+    name: "Company",
+    description: "Name of Company"
+  },
   ADDRESS: {
     name: "Country, city",
     description: "Street address"

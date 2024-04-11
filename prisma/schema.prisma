@@ -69,6 +69,7 @@ model ContactMethod {
 }
 
 enum ContactMethodType {
+    NAME
     ADDRESS
     EMAIL
     PHONE

@@ -55,7 +55,7 @@ const ContactList = () => {
   return (
     <Dialog onOpenChange={handleDialogOpenChange}>
       <Heading as="h2" size="sm">
-        Other Informations
+        Company Details
       </Heading>
 
       <div className="flex flex-col items-start">
