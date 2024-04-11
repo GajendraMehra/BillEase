@@ -31,7 +31,7 @@ const HeaderForm = ({id}: HeaderFormProps) => {
     },
     values: {
       description: data?.description || "",
-      gst: data?.gst.toString() || "",
+      gst: data?.gst ? data?.gst.toString() : "0",
       hsnCode: data?.hsnCode || "",
       name: data?.name || ""
     },
@@ -48,7 +48,7 @@ const HeaderForm = ({id}: HeaderFormProps) => {
     const mutationVariables = data?.id ? {id: data.id, ...formValues} : {...formValues};
 
     await mutation.mutateAsync(
-      {...mutationVariables, gst: mutationVariables.gst / 1 || 0},
+      {...mutationVariables, gst: mutationVariables.gst ? Number(mutationVariables?.gst) : 0},
       {
         async onSuccess() {
           toast({

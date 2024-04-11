@@ -84,10 +84,10 @@ const ItemCard = ({id, name, hsnCode, onClickDeleteBtn}: ItemCardProps) => {
   return (
     <article className="flex w-full items-center gap-1 border-b-[1px] border-solid border-muted py-3 last-of-type:border-0">
       <div className="mr-4 flex-1">
-        <p className="font-poppins text-sm font-semibold leading-8">{hsnCode}</p>
+        <p className="font-poppins text-sm font-semibold leading-8">{name}</p>
         {/* <p className="text-xs leading-6 text-muted-foreground">{value}</p> */}
         <span className="text-xs leading-6 text-muted-foreground">
-          {name}
+          {hsnCode}
           {/* {endDate ? format(endDate, "MMM yyyy") : "Present"} */}
         </span>
       </div>
