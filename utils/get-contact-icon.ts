@@ -9,6 +9,7 @@ type ContactMethodIconsKeys = {
 };
 
 const contactMethodIconsDef: ContactMethodIconsKeys = {
+  NAME: HouseSvg,
   ADDRESS: HouseSvg,
   EMAIL: EnvelopeSvg,
   PHONE: PhoneSvg,
